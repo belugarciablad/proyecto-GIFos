@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIFOS</title>
+    <link rel="icon" href="assets/icon-mis-gifos.svg">
+    <link rel="stylesheet" href="styles/dist/styles.css">
+</head>
+<body>
+    <div class="purple-rectangle"></div>
+    <header class="header">
+        <img class="logo" src="assets/logo-mobile.svg" alt="logo">
+        <div class="menu-hamb">
+            <input type="checkbox" id="input-burguer">
+            <img class="burguer hamb" src="assets/burger.svg" alt="burguer">
+            <img class="close hamb" src="assets/close.svg" alt="close">
+            <nav class="navbar">
+                <ul class="navlist">
+                    <input type="checkbox" id="dark-mode">
+                    <li class="navitem day" id="day">Modo Nocturno</li>
+                    <li class="navitem night" id="night">Modo Diurno</li>
+                    <li class="navitem fav-li">Favoritos</li>
+                    <li class="navitem mygifos-li">Mis Gifos</li>
+                </ul>
+            </nav>
+        </div>
+        <img id="create-gif" class="create-gif button" src="assets/button-crear-gifo.svg" alt="create-gifo">
+    </header>
+    <section class="home">
+        <h1 class="title">Inspírate, busca, guarda y crea los <br> mejores <span class="green-word">GIFOS</span></h1>
+        <img class="home-img" src="assets/ilustra_header.svg" alt="ilustra">
+        <div class="search">
+            <input class="search-bar" id="search-bar" type="text" placeholder="Busca GIFOS y más" autocomplete="off">
+            <img class="icon-search" src="assets/icon-search.svg" alt="icon-search">
+            <ul class="search-suggestions"></ul>   
+        </div>
+        <div class="search-cont"></div>
+        <img  id="vermas" class="vermas" src="assets/CTA-ver-mas.svg" alt="vermas">
+        <div class="home-trending">
+            <h3 class="h3-trending">Trending:</h3>
+            <h4 class="h4-trending">Reactions, Entertainment, Sports, Stickers, Artists</h5>
+        </div>
+        </section>
+        <section class="favorites">
+            <img class="section-icon" src="assets/icon-favoritos.svg" alt="fav-icon">
+            <h2 class="subtitle">Favoritos</h2>
+            <div class="no-content">
+                <img class="no-content-img" src="assets/icon-fav-sin-contenido.svg" alt="fav-no-content">
+                <p class="no-content-p">¡Guarda tu primer GIFO en Favoritos <br>para que se muestre aquí!</p>
+            </div>
+        </section>
+        <section class="myGifos">
+            <img class="section-icon" src="assets/icon-mis-gifos.svg" alt="my-gifos-icon">
+            <h2 class="subtitle">Mis GIFOS</h2>
+            <div class="no-content">
+                <img class="no-content-img" src="assets/icon-mis-gifos-sin-contenido.svg" alt="my-gifos-no-content">
+                <p class="no-content-p">¡Anímate a crear tu primer GIFO!</p>
+            </div>
+        </section>
+        <section class="real-trends">
+            <h2 class="subtitle">Trending GIFOS</h2>
+            <p class="p-trends">Mira los últimos <span class="break">GIFOS de nuestra comunidad.</span></p>
+            <img class="left-slider" src="assets/button-slider-left.svg" alt="left slider">
+            <ul id="trending-gif-container" class="trending-gif-container"></ul>
+            <img class="right-slider" src="assets/Button-Slider-right.svg" alt="right slider">
+        </section>
+        <section class="gif-creator">
+            <div class="camera">
+                <div class="camera-container">
+                    <img class="camera-img" src="assets/camara.svg" alt="camara">
+                    <img class="luz" src="assets/element-luz-camara.svg" alt="luz">
+                </div>
+            </div>
+            <div class="create-text">
+                <h3 class="create-h3">Aquí podrás <br>crear tus propios <span class="green-word">GIFOS</span></h3>
+                <p class="create-p">¡Crea tu GIFO en sólo 3 pasos! <br>(sólo necesitas una cámara para grabar un video)</p>
+            </div>
+            <img class="pelicula-img" src="assets/pelicula.svg" alt="pelicula">
+            <div class="create-gif-buttons">
+                <div class="pasos3">
+                    <img class="step" src="assets/paso-a-paso.svg" alt="paso1">
+                    <img class="step" src="assets/paso2.svg" alt="paso2">
+                    <img class="step" src="assets/paso3.svg" alt="paso3">
+                </div>
+                <div class="purple-border-rectangle"></div>
+                <img class="comenzar-img" src="assets/comenzar.svg" alt="comenzar">
+            </div>
+
+        </section>
+        <footer class="footer">
+            <p class="share">Compartir en:</p>
+            <ul class="socialnet-list">
+                <li class="socialnet-item"><img src="assets/icon_facebook.svg" alt="fb-icon"></li>
+                <li class="socialnet-item"><img src="assets/icon-twitter.svg" alt="tw-icon"></li>
+                <li class="socialnet-item"><img src="assets/icon_instagram.svg" alt="ig-icon"></li>
+            </ul>
+            <p class="rights">© GIFOS 2020 All Rights Reserved.</p>
+        </footer>
+        <div class="purple-rectangle"></div>
+        
+    <script type="module" src="app.js"></script>
+    <script type="module" src="api.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+$bg-color-dark: #37383C;
+$sec-gb-color-dark: #222326;
+$primary-color-dark: #000000;
+$text-color-dark: #9CAFC3;
+$text-color-dark: #ffffff;
+.navlist input:checked ~ .day {
+    display: none;
+}
+.navlist #dark-mode:not(:checked) ~ .night{
+    display: none;
+}
+.purple-rectangle{
+    background: $primary-color-dark;
+}
+.header{
+    background: $bg-color-dark;
+    .menu-hamb{
+        
+        .navbar{
+            background: $primary-color-dark;
+            opacity: 100%;
+            .navlist{
+                .navitem{
+                  color: $text-color-dark;
+                }  
+            }
+        }
+    }
+}
+body{
+    background: $bg-color-dark;
+} 
+
+.home{
+    .title{
+        color: $text-color-dark;
+    }
+    .search {
+        border-color: $text-color-dark;
+    }
+    .home-trending{
+        color: $text-color-dark;
+    }
+}
+.real-trends{
+    background-color: $sec-gb-color-dark;
+    .p-trends{
+        color: $text-color-dark
+    }
+}
+.subtitle{
+    color: $text-color-dark;
+}
+.footer{
+    color: $text-color-dark;
+}
+
+
+@media screen and (min-width:990px){
+    .header .menu-hamb .navbar .navlist{
+        background: $bg-color-dark;
+    }
+}
+

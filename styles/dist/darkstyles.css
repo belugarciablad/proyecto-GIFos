@@ -1,0 +1,57 @@
+.navlist input:checked ~ .day {
+  display: none;
+}
+
+.navlist #dark-mode:not(:checked) ~ .night {
+  display: none;
+}
+
+.purple-rectangle {
+  background: #000000;
+}
+
+.header {
+  background: #37383C;
+}
+.header .menu-hamb .navbar {
+  background: #000000;
+  opacity: 100%;
+}
+.header .menu-hamb .navbar .navlist .navitem {
+  color: #ffffff;
+}
+
+body {
+  background: #37383C;
+}
+
+.home .title {
+  color: #ffffff;
+}
+.home .search {
+  border-color: #ffffff;
+}
+.home .home-trending {
+  color: #ffffff;
+}
+
+.real-trends {
+  background-color: #222326;
+}
+.real-trends .p-trends {
+  color: #ffffff;
+}
+
+.subtitle {
+  color: #ffffff;
+}
+
+.footer {
+  color: #ffffff;
+}
+
+@media screen and (min-width: 990px) {
+  .header .menu-hamb .navbar .navlist {
+    background: #37383C;
+  }
+}
