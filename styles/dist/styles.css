@@ -106,6 +106,10 @@ body, header, section, footer {
   color: #50E3C2;
 }
 
+.search-bar:focus {
+  outline: none;
+}
+
 .home .title {
   font-size: 25px;
   color: #572EE5;
@@ -117,7 +121,6 @@ body, header, section, footer {
 }
 .home .home-img {
   width: 273px;
-  height: 130px;
   display: block;
   margin: auto;
 }
@@ -128,29 +131,32 @@ body, header, section, footer {
   border: 1px solid #572EE5;
   border-radius: 27px;
 }
+.home .search .searchZoom {
+  opacity: 0;
+  display: inline;
+  margin-left: 20px;
+}
 .home .search .search-bar {
   height: 50px;
   width: 100%;
   font-family: "Roboto";
   font-size: 16px;
   text-align: center;
-  width: 334px;
+  width: 250px;
   z-index: 1;
   border: none;
   background: transparent;
   position: relative;
-  right: 44px;
   z-index: 1;
   text-align: left;
-  margin-left: 65px;
+  padding-left: 15px;
+  display: inline;
 }
 .home .search .icon-search {
   width: 20px;
   height: 20px;
   position: relative;
   position: relative;
-  left: 293px;
-  bottom: 34px;
   z-index: 1;
 }
 .home .search-gif-container {
@@ -174,7 +180,7 @@ body, header, section, footer {
 }
 .home .search-suggestions {
   display: block;
-  width: 550px;
+  width: 100%;
   margin: auto;
 }
 .home .search-suggestions .search-suggest-item {
@@ -205,13 +211,18 @@ body, header, section, footer {
   font-weight: 700;
   margin-bottom: 10px;
 }
-.home .home-trending .h4-trending {
+.home .home-trending .ul-trending-terms {
   font-size: 14px;
   font-weight: 400;
   line-height: 25px;
   width: 225px;
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   margin: auto;
+}
+.home .home-trending .ul-trending-terms .li-trending-terms {
+  text-transform: capitalize;
 }
 
 .subtitle {
@@ -254,8 +265,6 @@ body, header, section, footer {
   flex-direction: row;
   justify-content: space-evenly;
   margin: 20px 10px;
-  scroll-snap-type: x mandatory;
-  overflow-x: scroll;
 }
 
 .trending-gif-item {
@@ -286,6 +295,26 @@ body, header, section, footer {
 .favorites, .myGifos {
   display: none;
   margin-top: 10px;
+}
+
+.fav-gif-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  margin: 80px 150px;
+  grid-gap: 30px;
+}
+.fav-gif-container .fav-gif-item {
+  width: 260px;
+  height: 200px;
+}
+.fav-gif-container .fav-gif-item figure {
+  width: 100%;
+  height: 100%;
+}
+.fav-gif-container .fav-gif-item figure img {
+  width: 100%;
+  height: 100%;
 }
 
 .no-content {
@@ -419,6 +448,33 @@ body, header, section, footer {
   line-height: 20px;
 }
 
+.card-specifications {
+  display: none;
+}
+
+.gif-item:hover .card-specifications {
+  display: block;
+}
+
+.gif-item:hover img {
+  opacity: 0.3;
+}
+
+.gif-item:hover {
+  background: #572EE5;
+}
+
+.dis-fav {
+  display: none;
+  border-radius: 6px;
+  padding: 6px;
+  background: #FFFFFF;
+}
+
+.gif-item:hover .dis-fav {
+  opacity: 1;
+}
+
 @media screen and (max-width: 375px) {
   .home .home-img {
     width: 80%;
@@ -496,11 +552,11 @@ body, header, section, footer {
     width: 551px;
   }
   .home .search .search-bar {
-    right: -16px;
+    width: 334px;
     color: #000000;
   }
   .home .search .icon-search {
-    left: 100px;
+    left: 120px;
     bottom: -3px;
   }
   .home .home-trending {
@@ -509,7 +565,7 @@ body, header, section, footer {
   .home .home-trending .h3-trending {
     font-size: 18px;
   }
-  .home .home-trending .h4-trending {
+  .home .home-trending .ul-trending-terms {
     width: 402px;
     font-size: 16px;
   }
@@ -563,6 +619,48 @@ body, header, section, footer {
 
   .trending-gif-item:nth-child(3) {
     display: block;
+  }
+
+  .card-icons-container {
+    position: relative;
+    bottom: 265px;
+    left: 53%;
+    width: 47%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  .card-icons-container-search {
+    bottom: 192px;
+  }
+
+  .gif-title {
+    position: relative;
+    bottom: 118px;
+    margin-left: 20px;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-family: "Roboto";
+    font-size: 16px;
+  }
+
+  .gif-title-search {
+    bottom: 108px;
+  }
+
+  .gif-username {
+    position: relative;
+    bottom: 125px;
+    margin-left: 20px;
+    font-family: "Roboto";
+    font-size: 16px;
+    color: #FFFFFF;
+    font-size: 15px;
+  }
+
+  .gif-username-search {
+    bottom: 115px;
   }
 
   .footer {

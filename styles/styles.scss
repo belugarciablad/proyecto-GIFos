@@ -122,6 +122,10 @@ body,header,section,footer{
 .green-word{
     color: $sec-color;
 }
+
+.search-bar:focus{
+    outline: none;
+}
 .home{
     .title{
         font-size: 25px;
@@ -134,12 +138,19 @@ body,header,section,footer{
     }
     .home-img{
         width: 273px;
-        height: 130px;
+        // height: 130px;
         display:block;
         margin:auto;
     }
 
     .search{
+
+        .searchZoom{
+            opacity: 0;
+            display: inline;
+            margin-left: 20px;
+        }
+
         display: block;
         margin: auto;
         width: 334px;
@@ -152,24 +163,26 @@ body,header,section,footer{
             font-family: $sec-font-family;
             font-size: 16px;
             text-align: center;
-            width: 334px;
+            width: 250px;
             z-index: 1;
             // outline: none;
             border: none;
             background: transparent;
             position: relative;
-            right: 44px;
+            // right: 44px;
             z-index: 1;
             text-align: left;
-            margin-left: 65px;
+            // margin-left: 45px;
+            padding-left: 15px;
+            display: inline;
         }
         .icon-search{
             width: 20px;
             height: 20px;
             position: relative;
             position: relative;
-            left: 293px;
-            bottom: 34px;
+            // left: 293px;
+            // bottom: 34px;
             z-index: 1;
         }
     }
@@ -196,7 +209,7 @@ body,header,section,footer{
 
     .search-suggestions{
         display: block;
-        width: 550px;
+        width: 100%;
         margin: auto;
 
         .search-suggest-item{
@@ -230,13 +243,18 @@ body,header,section,footer{
             font-weight: 700;
             margin-bottom: 10px;
         }
-        .h4-trending{
+        .ul-trending-terms{
             font-size: 14px;
             font-weight: 400;
             line-height: 25px;
             width: 225px;
-            display: block;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
             margin: auto;
+            .li-trending-terms{
+                text-transform: capitalize;
+            }
         }
     }
 }  
@@ -279,8 +297,8 @@ body,header,section,footer{
     flex-direction: row;
     justify-content: space-evenly;
     margin: 20px 10px;
-    scroll-snap-type:  x mandatory;
-    overflow-x: scroll;
+    // scroll-snap-type:  x mandatory;
+    // overflow-x: scroll;
     
 }
 .trending-gif-item{
@@ -311,6 +329,26 @@ body,header,section,footer{
     display: none;
     margin-top: 10px;
 }
+.fav-gif-container{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(3,1fr);
+    margin: 80px 150px;
+    grid-gap: 30px;
+    .fav-gif-item{
+        width: 260px;
+        height: 200px;
+        figure{
+            width: 100%;
+            height: 100%;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
 .no-content{
     margin-top: 110px;
     .no-content-img{
@@ -452,6 +490,30 @@ body,header,section,footer{
         line-height: 20px;
     }
 }
+.card-specifications{
+    display: none;
+}
+.gif-item:hover .card-specifications{
+    display: block;
+}
+.gif-item:hover img{
+    opacity: 0.3;
+}
+.gif-item:hover{
+    background: $primary-color;
+}
+
+.dis-fav{
+    display: none;
+    border-radius: 6px;
+    padding: 6px;
+    background: $bg-color;
+}
+.gif-item:hover .dis-fav{
+    opacity: 1;
+}
+
+
 
 @media screen and (max-width:375px){
     .home{
@@ -530,11 +592,12 @@ body,header,section,footer{
         .search{
             width: 551px;
             .search-bar{
-                right: -16px;
+                // right: -16px;
+                width: 334px;
                 color: $active-font-search;
             }
             .icon-search{
-                left: 100px;
+                left: 120px;
                 bottom: -3px;
             }
         }
@@ -543,7 +606,7 @@ body,header,section,footer{
             .h3-trending{
                 font-size: 18px;
             }
-            .h4-trending{
+            .ul-trending-terms{
                 width: 402px;
                 font-size: 16px;
             }
@@ -596,7 +659,42 @@ body,header,section,footer{
     .trending-gif-item:nth-child(3){
         display: block;
     }
-    
+    .card-icons-container{
+        position: relative;
+        bottom: 265px;
+        left: 53%;
+        width: 47%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    } 
+    .card-icons-container-search{
+        bottom: 192px;
+    }
+    .gif-title{
+        position: relative;
+        bottom: 118px;
+        margin-left: 20px;
+        color: $bg-color;
+        font-weight: 800;
+        font-family: $sec-font-family;
+        font-size: 16px;
+    } 
+    .gif-title-search{
+        bottom: 108px;   
+    } 
+    .gif-username{
+        position: relative;
+        bottom: 125px;
+        margin-left: 20px;
+        font-family: $sec-font-family;
+        font-size: 16px;
+        color: $bg-color;
+        font-size: 15px;
+    }
+    .gif-username-search{
+        bottom: 115px;   
+    } 
 
     .footer{
         display: flex;

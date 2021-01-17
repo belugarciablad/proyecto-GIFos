@@ -1,6 +1,6 @@
 'use strict'
 
-import {api_key} from "../Proyecto GIFos/api.js";
+import {api_key} from "../proyecto-GIFos/api.js";
 
 const darkMode = document.getElementById('dark-mode');
 
@@ -12,6 +12,7 @@ const lightLogo ='assets/logo-mobile.svg';
 const iconSearch = document.querySelector('.icon-search');
 const iconSearchDark = "assets/icon-search-modo-noct.svg";
 const iconSearchLight = "assets/icon-search.svg";
+const searchZoom = document.querySelector('.searchZoom');
 
 const burguer = document.querySelector('.burguer');
 const close = document.querySelector('.close');
@@ -68,7 +69,17 @@ function activeClass(active,active2, inactive1,inactive2,inactive3,inactive4){
         inputBurguer.checked = false;
     }
 }
-favLi.addEventListener('click',()=> activeClass(favorites,trendingGifos,home,myGifos,gifCreator,gifCreator));
+favLi.addEventListener('click',()=>{
+    activeClass(favorites,trendingGifos,home,myGifos,gifCreator,gifCreator);
+    let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+    favContainer.innerHTML = "";
+    localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+    if(localStorageFavorites != null){
+        nofavsContainer.style.display ="none";
+    }else{
+        nofavsContainer.style.display ="block";
+    }
+});
 mygifosLi.addEventListener('click',()=> activeClass(myGifos,trendingGifos,home,favorites,gifCreator,gifCreator));
 logo.addEventListener('click',()=> activeClass(home,trendingGifos,favorites,myGifos,gifCreator,gifCreator));
 createGif.addEventListener('click',()=> activeClass(gifCreator,gifCreator,home,favorites,myGifos,trendingGifos))
@@ -87,6 +98,7 @@ async function callGif() {
     trendingList = result.data;
     console.log(trendingList);
     sliceGifArray();
+
 }
 function sliceGifArray(){
     try{
@@ -104,16 +116,86 @@ async function renderGif(gif,container){
     const listItem = document.createElement('li');
     const figure = document.createElement('figure');
     const img = document.createElement('img');
+    const cardSpecs = document.createElement('div');
+    const username = document.createElement('p');
+    const title = document.createElement('p');
+    const iconCardContainer = document.createElement('div');
+    const fav = document.createElement('img');
+    const disFav = document.createElement('img');
+    const download = document.createElement('img');
+    const expand = document.createElement('img');
     
-    listItem.className = 'trending-gif-item';
+    listItem.className = 'trending-gif-item gif-item';
     img.src = gif.images.original.url;
     img.alt = gif.title;
+    title.innerText = gif.title.split('by')[0];
+    username.innerText = gif.username;
+    fav.src = "assets/icon-fav.svg";
+    fav.alt = "empty-heart";
+    disFav.src = "assets/icon-fav-active.svg";
+    disFav.alt = "full-heart";
+    download.src = "assets/icon-download.svg";
+    expand.src = "assets/icon-max-normal.svg";
+
+    cardSpecs.className = 'card-specifications';
+    iconCardContainer.className = 'card-icons-container';
+    title.className ='gif-title';
+    username.className ='gif-username';
+    fav.className ='gif-fav-icon gif-card-icons';
+    disFav.className ='gif-fav-icon gif-card-icons dis-fav';
+    download.className ='gif-download-icon gif-card-icons';
+    expand.className ='gif-expand-icon gif-card-icons';
     
     figure.appendChild(img);
     listItem.appendChild(figure);
+    listItem.appendChild(cardSpecs);
+    iconCardContainer.appendChild(fav);
+    iconCardContainer.appendChild(disFav);
+    iconCardContainer.appendChild(download);
+    iconCardContainer.appendChild(expand);
     container.appendChild(listItem); 
-}
 
+    cardSpecs.append(iconCardContainer);
+    cardSpecs.append(username);
+    cardSpecs.append(title);
+    listItem.appendChild(cardSpecs);
+
+    
+    fav.addEventListener('click', ()=>{
+        addFavoriteToLocalStorage(gif.id, gif.title, gif.username, gif.images.original.url);
+        fav.style.display ="none";
+        disFav.style.display = "block";
+        let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+        favContainer.innerHTML = "";
+        localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+        if(localStorageFavorites != null){
+            nofavsContainer.style.display ="none";
+        }else{
+            nofavsContainer.style.display ="block";
+        }
+    })
+        disFav.addEventListener('click',()=>{
+        removeFavoriteFromLocalStorage(gif.id,gif.title,gif.username,gif.images.original.url);
+        fav.style.display = "block";
+        disFav.style.display = "none";
+        let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+        favContainer.innerHTML = "";
+        localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+        if(localStorageFavorites != null){
+            nofavsContainer.style.display ="none";
+        }else{
+            nofavsContainer.style.display ="block";
+        }
+    })
+    let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+    if(localStorageFavorites.find(item => item.id == gif.id)){
+        fav.style.display ="none";
+        disFav.style.display = "block";
+    }else{
+        fav.style.display = "block";
+        disFav.style.display = "none";
+    }
+}
 //carrousel
 const leftSlider = document.querySelector('.left-slider');
 const rightSlider = document.querySelector('.right-slider');
@@ -167,16 +249,88 @@ async function renderGifSearch(gif,container){
     const listItem = document.createElement('li');
     const figure = document.createElement('figure');
     const img = document.createElement('img');
+    const cardSpecs = document.createElement('div');
+    const username = document.createElement('p');
+    const title = document.createElement('p');
+    const iconCardContainer = document.createElement('div');
+    const fav = document.createElement('img');
+    const disFav = document.createElement('img');
+    const download = document.createElement('img');
+    const expand = document.createElement('img');
     
-    listItem.className = 'search-gif-item';
+    listItem.className = 'search-gif-item gif-item';
     container.className = 'search-gif-container';
     img.src = gif.images.original.url;
     img.alt = gif.title;
+    title.innerText = gif.title.split('by')[0];
+    username.innerText = gif.username;
+    fav.src = "assets/icon-fav.svg"
+    fav.alt = "empty-heart";
+    disFav.src = "assets/icon-fav-active.svg";
+    disFav.alt = "full-heart";
+    download.src = "assets/icon-download.svg"
+    expand.src = "assets/icon-max-normal.svg"
+    
+    cardSpecs.className = 'card-specifications';
+    iconCardContainer.className = 'card-icons-container card-icons-container-search ';
+    title.className ='gif-title gif-title-search';
+    username.className ='gif-username gif-username-search';
+    fav.className ='gif-fav-icon gif-card-icons';
+    disFav.className ='gif-fav-icon gif-card-icons dis-fav';
+    download.className ='gif-download-icon gif-card-icons';
+    expand.className ='gif-expand-icon gif-card-icons';
+        
     
     figure.appendChild(img);
     listItem.appendChild(figure);
+    iconCardContainer.appendChild(fav);
+    iconCardContainer.appendChild(disFav);
+    iconCardContainer.appendChild(download);
+    iconCardContainer.appendChild(expand);
     container.appendChild(listItem); 
     searchDiv.appendChild(container);
+    
+    cardSpecs.append(iconCardContainer);
+    cardSpecs.append(username);
+    cardSpecs.append(title);
+    listItem.appendChild(cardSpecs);
+
+    
+    fav.addEventListener('click', ()=>{
+        addFavoriteToLocalStorage(gif.id, gif.title, gif.username, gif.images.original.url);
+        fav.style.display ="none";
+        disFav.style.display = "block";
+        let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+        favContainer.innerHTML = "";
+        localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+        if(localStorageFavorites != null){
+            nofavsContainer.style.display ="none";
+        }else{
+            nofavsContainer.style.display ="block";
+        }
+    })
+        disFav.addEventListener('click',()=>{
+        removeFavoriteFromLocalStorage(gif.id,gif.title,gif.username,gif.images.original.url);
+        fav.style.display = "block";
+        disFav.style.display = "none";
+        let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+        favContainer.innerHTML = "";
+        localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+        if(localStorageFavorites != null){
+            nofavsContainer.style.display ="none";
+        }else{
+            nofavsContainer.style.display ="block";
+        }
+    })
+    let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || [];
+    if(localStorageFavorites.find(item => item.id == gif.id)){
+        fav.style.display ="none";
+        disFav.style.display = "block"; 
+    }else{
+        fav.style.display = "block";
+        disFav.style.display = "none";
+    }
+    
 }
 
 //suggestions
@@ -197,12 +351,12 @@ async function renderSuggestions(suggest,container){
     const listItem = document.createElement('li');
     const img = document.createElement('img');
     const span = document.createElement('span');
-
+    
     img.src = "assets/icon-search-modo-noct.svg";
     listItem.className = 'search-suggest-item';
     img.className = 'search-suggest-img';
     span.className = 'search-suggest-gif';
-
+    
     span.innerText = suggest.name;
     listItem.appendChild(img);
     listItem.appendChild(span);
@@ -211,7 +365,7 @@ async function renderSuggestions(suggest,container){
     
 }
 
-    
+
 
 function searchSuggestion(li,sug){ 
     li.addEventListener('click', ()=>{
@@ -224,18 +378,23 @@ function searchSuggestion(li,sug){
 
 searchInput.addEventListener('keyup', (e) => {
     if(searchInput.value != ""){
+        searchZoom.style.opacity = '100%';
+        searchInput.style.marginLeft = '0px';
         
         iconSearch.src = closeLight;
         iconSearch.style.width = '14px';
         iconSearch.style.heigth = '14px';
-
+        
     }else{
+        searchZoom.style.opacity = '0';
+        // searchInput.style.marginLeft = '45px';
+
         iconSearch.src = iconSearchLight;
         iconSearch.style.width = '20px';
         iconSearch.style.heigth = '20px';
     }
     let keySearch = searchInput.value;
-
+    
     if(e.key === "Enter"){
         suggestionsContainer.innerHTML = "";
         searchContainer.innerHTML = "";
@@ -244,7 +403,7 @@ searchInput.addEventListener('keyup', (e) => {
         if(keySearch === ""){
             searchContainer.innerHTML = "";
         }
-
+        
     }else{
         suggestionsContainer.innerHTML = "";
         debounce(suggestListener,'suggest');
@@ -260,9 +419,8 @@ searchIcon.addEventListener('click',()=>{
     iconSearch.style.width = '20px';
     iconSearch.style.heigth = '20px';
 
-    // searchContainer.innerHTML = "";
-    // const query = searchInput.value;
-    // searchListener(query);
+    searchZoom.style.opacity = '0';
+    // searchInput.style.marginLeft = '45px';
 } );
 
 async function searchListener(query){
@@ -270,7 +428,7 @@ async function searchListener(query){
     searchList.forEach(item => renderGifSearch(item,searchContainer));
 }
 async function suggestListener(){
-
+    
     const suggestList = await callGifSuggest();
     suggestList.forEach(item => renderSuggestions(item,suggestionsContainer));
 }
@@ -281,5 +439,160 @@ function debounce(callback,timerKey,delay=300){
     timerIds[timerKey] = setTimeout(callback,delay);
 }
 
- 
+// fetch trending titles
+
+
+async function callTrendingTitles() {
+    const urlTrendingTitles = `http://api.giphy.com/v1/trending/searches?api_key=${api_key}&limit=4`;
+    const response = await fetch(urlTrendingTitles);
+    const result = await response.json();
+    // console.log(result.data);
+    return result.data;
+}
+async function renderTrendingTitles(title,container){
+    const trendingTerm = document.createElement('li');
+    trendingTerm.innerHTML = title;
+    trendingTerm.className = 'li-trending-terms';
+    container.appendChild(trendingTerm);
+}
+
+const trendingTerms = document.querySelector('.ul-trending-terms');
+
+async function trendingTitlesListener(){
+    const trendingTitlesResult =  await callTrendingTitles();
+    const trendingTitles = await trendingTitlesResult.slice(0,4);
+    console.log(trendingTitles);
+    const trendingLineExceptLast = await trendingTitles.slice(0,3);
+    const trendingLineLast = await trendingTitles.slice(3,4);
+    const trendingLine = [];
+    trendingLineExceptLast.forEach(item => trendingLine.push(item+", "));
+    trendingLine.push(trendingLineLast[0]);
+    console.log(trendingLine);
+    trendingLine.forEach(item =>  renderTrendingTitles(item,trendingTerms))
+}
+trendingTitlesListener();
+
+
+
+//favorites
+
+const favContainer = document.querySelector('.fav-container');
+const nofavsContainer = document.getElementById('no-content-fav');
+
+function addFavoriteToLocalStorage(id, title, username, image){
+    
+    let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || [];
+    localStorageFavorites = localStorageFavorites.concat({
+        id: id,
+        title: title,
+        username: username,
+        image: image
+    })
+    localStorage.setItem('favList', JSON.stringify(localStorageFavorites))
+    // favListener();
+    console.log(localStorageFavorites)
+}
+
+function removeFavoriteFromLocalStorage(id, title, username, image){
+    
+    let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+    localStorageFavorites = localStorageFavorites.filter(item => item.id !==id);
+    localStorage.setItem('favList', JSON.stringify(localStorageFavorites));
+    console.log(localStorageFavorites);
+    // console.log(localStorage.getItem('favList'));
+}
+
+
+function renderFav(gifId,image, tit, uname, container){
+
+    const listItem = document.createElement('li');
+    const figure = document.createElement('figure');
+    const img = document.createElement('img');
+    const cardSpecs = document.createElement('div');
+    const username = document.createElement('p');
+    const title = document.createElement('p');
+    const iconCardContainer = document.createElement('div');
+    const fav = document.createElement('img');
+    const disFav = document.createElement('img');
+    const download = document.createElement('img');
+    const expand = document.createElement('img');
+    
+    const id = gifId;
+
+    listItem.className = 'fav-gif-item gif-item';
+    container.className = 'fav-gif-container';
+    img.src = image;
+    img.alt = tit;
+    title.innerText = tit;
+    username.innerText = uname;
+    fav.src = "assets/icon-fav.svg"
+    fav.alt = "empty-heart";
+    disFav.src = "assets/icon-fav-active.svg"
+    disFav.alt = "full-heart";
+    download.src = "assets/icon-download.svg"
+    expand.src = "assets/icon-max-normal.svg"
+    
+    cardSpecs.className = 'card-specifications';
+    iconCardContainer.className = 'card-icons-container card-icons-container-search ';
+    title.className ='gif-title gif-title-search';
+    username.className ='gif-username gif-username-search';
+    fav.className ='gif-fav-icon gif-card-icons';
+    disFav.className ='gif-fav-icon gif-card-icons dis-fav';
+    download.className ='gif-download-icon gif-card-icons';
+    expand.className ='gif-expand-icon gif-card-icons';
+    
+    
+    figure.appendChild(img);
+    listItem.appendChild(figure);
+    iconCardContainer.appendChild(fav);
+    iconCardContainer.appendChild(disFav);
+    iconCardContainer.appendChild(download);
+    iconCardContainer.appendChild(expand);
+    container.appendChild(listItem); 
+    // favDiv.appendChild(container);
+    
+    cardSpecs.append(iconCardContainer);
+    cardSpecs.append(username);
+    cardSpecs.append(title);
+    listItem.appendChild(cardSpecs);
+
+    
+    fav.addEventListener('click', ()=>{
+        addFavoriteToLocalStorage(id, title, username, image);
+        fav.style.display ="none";
+        disFav.style.display = "block";
+        let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+        favContainer.innerHTML = "";
+        localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+        if(localStorageFavorites != null){
+            nofavsContainer.style.display ="none";
+        }else{
+            nofavsContainer.style.display ="block";
+        }
+    })
+        disFav.addEventListener('click',()=>{
+        removeFavoriteFromLocalStorage(id, title, username, image);
+        fav.style.display = "block";
+        disFav.style.display = "none";
+        let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+        favContainer.innerHTML = "";
+        localStorageFavorites.forEach(item => renderFav(item.id, item.image, item.title, item.username, favContainer));
+        if(localStorageFavorites != null){
+            nofavsContainer.style.display ="none";
+        }else{
+            nofavsContainer.style.display ="block";
+        }
+    })
+    let localStorageFavorites = JSON.parse(localStorage.getItem('favList')) || []
+    if(localStorageFavorites.find(item => item.id == id)){
+        fav.style.display ="none";
+        disFav.style.display = "block";
+    }else{
+        fav.style.display = "block";
+        disFav.style.display = "none";
+    }
+}
+
+
+    
 
